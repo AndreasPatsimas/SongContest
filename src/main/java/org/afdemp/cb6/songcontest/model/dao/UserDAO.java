@@ -8,7 +8,7 @@ package org.afdemp.cb6.songcontest.model.dao;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
-import model.entity.User;
+import org.afdemp.cb6.songcontest.model.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

@@ -6,8 +6,9 @@
 package org.afdemp.cb6.songcontest.model.dao;
 
 import java.util.List;
-import model.entity.Results;
-import model.entity.User;
+import org.afdemp.cb6.songcontest.model.entity.Results;
+import org.afdemp.cb6.songcontest.model.entity.User;
+
 
 /**
  *

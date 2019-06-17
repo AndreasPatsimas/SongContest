@@ -14,11 +14,12 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.DAO.MessageDAO;
-import model.DAO.RelationUserDAO;
-import model.DAO.UserDAO;
-import model.entity.Message;
-import model.entity.User;
+import org.afdemp.cb6.songcontest.model.dao.MessageDAO;
+import org.afdemp.cb6.songcontest.model.dao.RelationUserDAO;
+import org.afdemp.cb6.songcontest.model.dao.UserDAO;
+import org.afdemp.cb6.songcontest.model.entity.Message;
+import org.afdemp.cb6.songcontest.model.entity.User;
+import org.afdemp.cb6.songcontest.utilities.RestoreInFile;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -28,10 +29,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import utilities.RestoreInFile;
 
 /**
  *

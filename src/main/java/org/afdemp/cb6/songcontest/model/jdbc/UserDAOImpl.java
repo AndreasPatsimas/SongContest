@@ -5,15 +5,15 @@
  */
 package org.afdemp.cb6.songcontest.model.jdbc;
 
-import encryption.CryptoConverter;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.DAO.UserDAO;
-import model.entity.User;
+import org.afdemp.cb6.songcontest.encryption.CryptoConverter;
+import org.afdemp.cb6.songcontest.model.dao.UserDAO;
+import org.afdemp.cb6.songcontest.model.entity.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;

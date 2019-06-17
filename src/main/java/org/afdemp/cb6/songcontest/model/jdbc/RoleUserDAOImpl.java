@@ -5,16 +5,11 @@
  */
 package org.afdemp.cb6.songcontest.model.jdbc;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.DAO.RoleUserDAO;
-import model.entity.Role;
-import model.entity.RoleUser;
-import model.entity.User;
+import org.afdemp.cb6.songcontest.model.dao.RoleUserDAO;
+import org.afdemp.cb6.songcontest.model.entity.Role;
+import org.afdemp.cb6.songcontest.model.entity.RoleUser;
+import org.afdemp.cb6.songcontest.model.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 /**

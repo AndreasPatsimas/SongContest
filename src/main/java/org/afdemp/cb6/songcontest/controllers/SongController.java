@@ -7,12 +7,12 @@ package org.afdemp.cb6.songcontest.controllers;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
-import model.DAO.ScoresDAO;
-import model.DAO.SongDAO;
-import model.DAO.UserDAO;
-import model.entity.Scores;
-import model.entity.Song;
-import model.entity.User;
+import org.afdemp.cb6.songcontest.model.dao.ScoresDAO;
+import org.afdemp.cb6.songcontest.model.dao.SongDAO;
+import org.afdemp.cb6.songcontest.model.dao.UserDAO;
+import org.afdemp.cb6.songcontest.model.entity.Scores;
+import org.afdemp.cb6.songcontest.model.entity.Song;
+import org.afdemp.cb6.songcontest.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
