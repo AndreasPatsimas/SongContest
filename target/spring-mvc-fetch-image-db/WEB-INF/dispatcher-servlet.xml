@@ -20,6 +20,11 @@
     
     <context:component-scan base-package="org.afdemp.cb6.songcontest.controllers"/>
     <mvc:annotation-driven/>
+    <mvc:resources mapping="/pic/**" location="/pic/" />
+    <mvc:resources mapping="/assets/**" location="/assets/" />
+    <mvc:resources mapping="/songcontest/**" location="/songcontest/" />
+    <mvc:resources mapping="/songs/**" location="/songs/" />
+    <mvc:resources mapping="/styles/**" location="/styles/" />
     
         <!-- Database Configurations -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
