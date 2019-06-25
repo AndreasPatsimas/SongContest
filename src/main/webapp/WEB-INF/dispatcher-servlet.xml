@@ -26,35 +26,35 @@
     <mvc:resources mapping="/songs/**" location="/songs/" />
     <mvc:resources mapping="/styles/**" location="/styles/" />
     
-        <bean id="userDAOImpl" class="model.jdbc.UserDAOImpl">
+     <bean id="userDAOImpl" class="org.afdemp.cb6.songcontest.model.jdbc.UserDAOImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
-    <bean id="roleUserDAOImpl" class="model.jdbc.RoleUserDAOImpl">
+    <bean id="roleUserDAOImpl" class="org.afdemp.cb6.songcontest.model.jdbc.RoleUserDAOImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
-    <bean id="messageDAOImpl" class="model.jdbc.MessageDAOImpl">
+    <bean id="messageDAOImpl" class="org.afdemp.cb6.songcontest.model.jdbc.MessageDAOImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
-    <bean id="RelationUserDAOImpl" class="model.jdbc.RelationUserDAOImpl">
+    <bean id="RelationUserDAOImpl" class="org.afdemp.cb6.songcontest.model.jdbc.RelationUserDAOImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
-    <bean id="CheckBlocksDAOImpl" class="model.jdbc.CheckBlocksDAOImpl">
+    <bean id="CheckBlocksDAOImpl" class="org.afdemp.cb6.songcontest.model.jdbc.CheckBlocksDAOImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
-    <bean id="SongDAOImpl" class="model.jdbc.SongDAOImpl">
+    <bean id="SongDAOImpl" class="org.afdemp.cb6.songcontest.model.jdbc.SongDAOImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
-    <bean id="ResultsDAOImpl" class="model.jdbc.ResultsDAOImpl">
+    <bean id="ResultsDAOImpl" class="org.afdemp.cb6.songcontest.model.jdbc.ResultsDAOImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
-    <bean id="ScoresDAOImpl" class="model.jdbc.ScoresDAOImpl">
+    <bean id="ScoresDAOImpl" class="org.afdemp.cb6.songcontest.model.jdbc.ScoresDAOImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     
