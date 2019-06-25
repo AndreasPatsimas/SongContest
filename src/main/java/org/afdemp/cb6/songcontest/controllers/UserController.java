@@ -5,7 +5,7 @@
  */
 package org.afdemp.cb6.songcontest.controllers;
 
-import encryption.CryptoConverter;
+import org.afdemp.cb6.songcontest.encryption.CryptoConverter;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.Blob;
