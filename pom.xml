@@ -247,7 +247,7 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>spring-mvc-fetch-image-db</finalName>
+        <finalName>SongContests</finalName>
     </build>
 
 </project>
