@@ -35,5 +35,7 @@ public interface UserDAO {
     
     public List<User> getUsersByPage(int pageid, int total);
     
+    public List<User> getUsersBySearch(String firstname, String lastname, User user);
+    
     public int getUsersCount();
 }

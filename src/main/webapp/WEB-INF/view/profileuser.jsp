@@ -48,6 +48,9 @@
                         <a class="nav-link active" style="font-size: 20px;" href="goToUserProfile">Profile</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" style="font-size: 20px;" href="viewProfilesUsers">Make Friends</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" style="font-size: 20px;" href="messages">Messages</a>
                     </li>
                     <li class="nav-item">
@@ -139,8 +142,8 @@
                         <div class="card-footer">
                             <button class="btn btn-sm btn-success" type="button"
                                     data-toggle="tooltip"
-                                    title="See all users"
-                                    data-original-title="users" onclick="window.location.href = 'viewUsers/1'"><i class="fa fa-user"></i></button>
+                                    title="Search for your friends"
+                                    data-original-title="users" onclick="window.location.href = 'viewProfilesUsers'"><i class="fa fa-user"></i></button>
                             <button class="btn btn-sm btn-primary" type="button"
                                     data-toggle="tooltip"
                                     title="Chat with your friends"

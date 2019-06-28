@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -60,8 +62,7 @@ public class UserController {
     @Autowired
     private ResultsDAO resultsDAO;
     
-    @Autowired
-    private RelationUserDAO relationUserDAO;
+    private static final Logger LOGGER = Logger.getLogger(UserController.class.getName());
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -286,13 +287,21 @@ public class UserController {
     @RequestMapping(value = "/getUserPhoto/{uid}")
 	public void getUserPhoto(HttpServletResponse response, @PathVariable("uid") Long uid) throws Exception {
 
+    	try {
             response.setContentType("image/jpeg");
 
             Blob ph = userDAO.getPictureByUserId(uid);
 
             byte[] bytes = ph.getBytes(1, (int) ph.length());
+            
             InputStream inputStream = new ByteArrayInputStream(bytes);
+            
             IOUtils.copy(inputStream, response.getOutputStream());
+        	
+    	}
+    	catch(Exception e) {
+    		LOGGER.info("No photo for some users ");
+    	}
 	}
         
     @RequestMapping(value="/allUsers", method = RequestMethod.GET)
@@ -365,4 +374,5 @@ public class UserController {
         }
     }
     
+
 }

@@ -45,6 +45,9 @@
                         <a class="nav-link" style="font-size: 20px;" href="goToUserProfile">Profile</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" style="font-size: 20px;" href="viewProfilesUsers">Make Friends</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" style="font-size: 20px;" href="messages">Messages</a>
                     </li>
                     <li class="nav-item">

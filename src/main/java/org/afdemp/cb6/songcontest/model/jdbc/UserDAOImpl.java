@@ -190,4 +190,26 @@ public class UserDAOImpl implements UserDAO {
         return jdbcTemplate.queryForInt(sql);
     }
 
+	@Override
+	public List<User> getUsersBySearch(String firstname, String lastname, User user) {
+		String sql = "select * from user where (firstname like '"+firstname+"%' or lastname like '"+lastname+"%') "
+				+ "and username <> " + "'" + user.getUsername() + "'" ;
+		
+		 return jdbcTemplate.query(sql, new RowMapper<User>() {
+	            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+	                User user = new User();
+	                user.setUid(rs.getLong("uid"));
+	                user.setUsername(rs.getString("username"));
+	                user.setPassword(rs.getString("password"));
+	                user.setFirstname(rs.getString("firstname"));
+	                user.setLastname(rs.getString("lastname"));
+	                user.setEmail(rs.getString("email"));
+	                user.setDoc(rs.getTimestamp("doc"));
+	                user.setPicture(rs.getBytes("picture"));
+	                user.setDob(rs.getDate("dob"));
+	                return user;
+	            }
+	        });
+	}
+
 }

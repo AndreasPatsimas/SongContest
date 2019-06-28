@@ -17,10 +17,12 @@ import org.afdemp.cb6.songcontest.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -39,20 +41,80 @@ public class RelationUserController {
     @Autowired
     private CheckBlocksDAO checkBlocksDAO;
 
-    @RequestMapping(value = "/viewUsers/{page_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/viewProfilesUsers", method = RequestMethod.GET)
+    public String viewProfilesOfUsers(HttpSession session, Model model) {
+    	if(session.getAttribute("loguser") != null){
+    		
+    		String x = "ap";
+    		model.addAttribute("aris", x);
+    		
+    		return "profiles";
+		}
+    	else {
+    		return "error";
+    	}
+    }
+    
+    @RequestMapping(value = "/searchForUsers")
+    public ModelAndView searchForUsers(@RequestParam("text") String text, HttpSession session)
+    {
+        if(session.getAttribute("loguser") != null){
+           
+        	User logUser = (User) session.getAttribute("loguser");
+        	
+        	String firstname = "";
+        	
+        	String lastname = "";
+        	
+        	List<User> usersList = new ArrayList<>();
+        	
+        	List<RelationUser> relationUserList = new ArrayList<>();
+        	
+        	ModelAndView mv = new ModelAndView();
+        	
+        	if(StringUtils.containsWhitespace(text)) {
+        		
+        		String[] fullnames = text.split(" ");
+        		
+        		firstname = fullnames[0];
+        		
+        		lastname = fullnames[1];
+        		
+        		usersList = userDAO.getUsersBySearch(firstname, lastname, logUser);
+        	}
+        	else {
+        		usersList = userDAO.getUsersBySearch(text, text, logUser);
+        	}
+        	
+        	for (User user : usersList) {
+                relationUserList.add(relationUserDAO.getRelationAmongUsers(logUser, user));
+            }
+        	
+        	mv.addObject("relationUserList", relationUserList);
+        	
+        	mv.setViewName("search_users");
+        	
+            return mv;
+        }
+        else{
+            return new ModelAndView("error");
+        }
+    }
+    
+   /* @RequestMapping(value = "/viewUsers/{page_id}", method = RequestMethod.GET)
     public String viewUsers(HttpSession session, Model model, @PathVariable("page_id") int page_id) {
         try {
             User logUser = (User) session.getAttribute("loguser");
             List<RelationUser> relationUserList = new ArrayList<>();
             int total = 3;
             int numOfPages = userDAO.getUsersCount()-total;
-            int previousNext = 1;
+            int previousNext = 1;*/
             /*if (page_id == 1) {
                 // do nothing!
             } else {
                 page_id = (page_id - 1) * total + 1;
             }*/
-            List<User> userList = userDAO.getUsersByPage(page_id, total);
+           /* List<User> userList = userDAO.getUsersByPage(page_id, total);
             
             //userList.remove(0);
             for (int i = 0; i < userList.size(); i++) {
@@ -77,10 +139,10 @@ public class RelationUserController {
             e.printStackTrace();
             return "error";
         }
-    }
+    }*/
 
-    @RequestMapping(value = "/friendRequest/{uid}/{page_id}")
-    public ModelAndView makeFriendRequest(@ModelAttribute("user") User userTwo, @PathVariable("uid") Long uid, @PathVariable("page_id") int page_id, HttpSession session) {
+    @RequestMapping(value = "/friendRequest/{uid}")
+    public ModelAndView makeFriendRequest(@ModelAttribute("user") User userTwo, @PathVariable("uid") Long uid, HttpSession session) {
         try {
             User userOne = (User) session.getAttribute("loguser");
             userTwo = userDAO.getUserById(uid);
@@ -88,14 +150,14 @@ public class RelationUserController {
             relationUser.setUserOne(userOne);
             relationUser.setUserTwo(userTwo);
             relationUserDAO.makeFriendRequest(relationUser);
-            return new ModelAndView("redirect:/viewUsers/"+page_id);
+            return new ModelAndView("redirect:/viewProfilesUsers");
         } catch (Exception e) {
             return new ModelAndView("error");
         }
     }
 
-    @RequestMapping(value = "/deleteRelation/{uid}/{page_id}")
-    public ModelAndView deleteFriend(@ModelAttribute("user") User userTwo, @PathVariable("page_id") int page_id, @PathVariable("uid") Long uid, HttpSession session) {
+    @RequestMapping(value = "/deleteRelation/{uid}")
+    public ModelAndView deleteFriend(@ModelAttribute("user") User userTwo, @PathVariable("uid") Long uid, HttpSession session) {
         try {
             User userOne = (User) session.getAttribute("loguser");
             userTwo = userDAO.getUserById(uid);
@@ -103,14 +165,14 @@ public class RelationUserController {
             relationUser.setUserOne(userOne);
             relationUser.setUserTwo(userTwo);
             relationUserDAO.deleteFriend(relationUser);
-            return new ModelAndView("redirect:/viewUsers/"+page_id);
+            return new ModelAndView("redirect:/viewProfilesUsers");
         } catch (Exception e) {
             return new ModelAndView("error");
         }
     }
 
-    @RequestMapping(value = "/acceptFriendRequest/{status}/{uid}/{page_id}")
-    public ModelAndView acceptFriendRequest(@ModelAttribute("user") User userTwo,@PathVariable("page_id") int page_id, @PathVariable("uid") Long uid, @PathVariable("status") Long status, HttpSession session) throws Exception {
+    @RequestMapping(value = "/acceptFriendRequest/{status}/{uid}")
+    public ModelAndView acceptFriendRequest(@ModelAttribute("user") User userTwo, @PathVariable("uid") Long uid, @PathVariable("status") Long status, HttpSession session) throws Exception {
         try {
             User userOne = (User) session.getAttribute("loguser");
             userTwo = userDAO.getUserById(uid);
@@ -119,7 +181,7 @@ public class RelationUserController {
             relationUser.setUserTwo(userTwo);
             relationUser.setStatus(Relation.getRelationFor(status));
             relationUserDAO.acceptFriendRequest(relationUser);
-            return new ModelAndView("redirect:/viewUsers/"+page_id);
+            return new ModelAndView("redirect:/viewProfilesUsers");
         } catch (Exception e) {
             return new ModelAndView("error");
         }
@@ -127,11 +189,11 @@ public class RelationUserController {
 
     @RequestMapping(value = "/acceptFriendRequest//{uid}")
     public ModelAndView bugAacceptFriendRequest() {
-        return new ModelAndView("redirect:/viewUsers");
+        return new ModelAndView("redirect:/viewProfilesUsers");
     }
 
-    @RequestMapping(value = "/blockUser/{status}/{uid}/{page_id}")
-    public ModelAndView blockUnblock(@ModelAttribute("user") User userTwo,@PathVariable("page_id") int page_id, @PathVariable("uid") Long uid, @PathVariable("status") Long status, HttpSession session) throws Exception {
+    @RequestMapping(value = "/blockUser/{status}/{uid}")
+    public ModelAndView blockUnblock(@ModelAttribute("user") User userTwo, @PathVariable("uid") Long uid, @PathVariable("status") Long status, HttpSession session) throws Exception {
         try {
             if (status == 2 || status == 3) {
                 RelationUser relationUser = new RelationUser();
@@ -156,7 +218,7 @@ public class RelationUserController {
                     e.getMessage();
                 }
             }
-            return new ModelAndView("redirect:/viewUsers/"+page_id);
+            return new ModelAndView("redirect:/viewProfilesUsers");
         } catch (Exception e) {
             return new ModelAndView("error");
         }
@@ -164,6 +226,6 @@ public class RelationUserController {
 
     @RequestMapping(value = "/blockUser//{uid}")
     public ModelAndView bugBlockUnblock() {
-        return new ModelAndView("redirect:/viewUsers");
+        return new ModelAndView("redirect:/viewProfilesUsers");
     }
 }
