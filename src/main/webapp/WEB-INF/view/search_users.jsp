@@ -139,7 +139,7 @@
 												</tr>
 												<tr>
 													<td>Status</td>
-													<td>${relationUser.status.name}</td>
+													<td><div id = "getStatus">${relationUser.status.name}</div></td>
 												</tr>
 											</tbody>
 										</table>
@@ -148,10 +148,11 @@
 							</div>
 							<div class="panel-footer">
 								<span class="pull-right">
-									<button class="btn btn-sm btn-primary" type="button"
+									<input type = "hidden" id = "helperfriendRequest" value = "${pageContext.request.contextPath}/friendRequest/${relationUser.userTwo.uid}">
+									<button class="btn btn-sm btn-primary" type="button" id = "friendRequest"
 										data-toggle="tooltip" title="Friend Request"
 										data-original-title="Send friend request to user"
-										onclick="window.location.href = '${pageContext.request.contextPath}/friendRequest/${relationUser.userTwo.uid}'">
+										>
 										<i class="glyphicon glyphicon-send"></i>
 									</button>
 									<button class="btn btn-sm btn-success" type="button"
@@ -161,17 +162,19 @@
 										<i class="glyphicon glyphicon-ok"></i>
 									</button>
 								</span>
-								<button class="btn btn-sm btn-danger" type="button"
+								<input type = "hidden" id = "helperdeleteRelation" value = "${pageContext.request.contextPath}/deleteRelation/${relationUser.userTwo.uid}">
+								<button class="btn btn-sm btn-danger" type="button" id = "deleteRelation"
 									data-toggle="tooltip" title="Remove from friend"
 									data-original-title="Remove this user"
-									onclick="window.location.href = '${pageContext.request.contextPath}/deleteRelation/${relationUser.userTwo.uid}'">
+									>
 									<i class="glyphicon glyphicon-remove"></i>
 								</button>
 
+								<input type = "hidden" id = "helperBlock" value = "${pageContext.request.contextPath}/blockUser/${relationUser.userTwo.uid}">
 								<button class="btn btn-sm btn-warning" id = "block" type="button"
 									data-toggle="tooltip" title="Block/Unblock your friend"
 									data-original-title="Block this user"
-									onclick="window.location.href = '${pageContext.request.contextPath}/blockUser/${relationUser.status.idrel}/${relationUser.userTwo.uid}'">
+									>
 									<i class="glyphicon glyphicon-ban-circle"></i>
 								</button>
 							</div>
@@ -184,6 +187,64 @@
 
 
 	<script>
+	
+	$(document).ready(function() {
+		$('#block').click(function(event) {
+			var urlBlock = $('#helperBlock').val();
+			console.log(urlBlock);
+			$.ajax({
+				url : urlBlock,
+				type : "GET",
+
+				success : function(response) {
+					$("#getStatus").html(response);
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr.responseText);
+				}
+			});
+			return false;
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#friendRequest').click(function(event) {
+			var urlFriendRequest = $('#helperfriendRequest').val();
+			console.log(urlFriendRequest);
+			$.ajax({
+				url : urlFriendRequest,
+				type : "GET",
+
+				success : function(response) {
+					$("#getStatus").html(response);
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr.responseText);
+				}
+			});
+			return false;
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#deleteRelation').click(function(event) {
+			var urlFriendRequest = $('#helperdeleteRelation').val();
+			console.log(urlFriendRequest);
+			$.ajax({
+				url : urlFriendRequest,
+				type : "GET",
+
+				success : function(response) {
+					$("#getStatus").html(response);
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr.responseText);
+				}
+			});
+			return false;
+		});
+	});
+	
 		$(document)
 				.ready(
 						function() {

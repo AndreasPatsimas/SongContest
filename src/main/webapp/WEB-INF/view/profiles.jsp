@@ -118,8 +118,6 @@
 		$('#sub').submit(function(event) {
 			var text = $('#ex1').val();
 			console.log(text);
-			/*var x = ${aris};
-			console.log(x);*/
 			var data = encodeURIComponent(text);
 			$.ajax({
 				url : "searchForUsers?text=" + encodeURIComponent(text),

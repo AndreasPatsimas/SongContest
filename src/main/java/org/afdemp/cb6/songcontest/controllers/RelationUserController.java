@@ -45,9 +45,6 @@ public class RelationUserController {
     public String viewProfilesOfUsers(HttpSession session, Model model) {
     	if(session.getAttribute("loguser") != null){
     		
-    		String x = "ap";
-    		model.addAttribute("aris", x);
-    		
     		return "profiles";
 		}
     	else {
@@ -142,32 +139,40 @@ public class RelationUserController {
     }*/
 
     @RequestMapping(value = "/friendRequest/{uid}")
-    public ModelAndView makeFriendRequest(@ModelAttribute("user") User userTwo, @PathVariable("uid") Long uid, HttpSession session) {
-        try {
+    public ModelAndView makeFriendRequest(User userTwo, @PathVariable("uid") Long uid, HttpSession session) {
+    	ModelAndView mv = new ModelAndView();
+    	try {
             User userOne = (User) session.getAttribute("loguser");
             userTwo = userDAO.getUserById(uid);
             RelationUser relationUser = new RelationUser();
             relationUser.setUserOne(userOne);
             relationUser.setUserTwo(userTwo);
             relationUserDAO.makeFriendRequest(relationUser);
-            return new ModelAndView("redirect:/viewProfilesUsers");
+            relationUser = relationUserDAO.getRelationAmongUsers(userOne, userTwo);
+            mv.addObject("relationUser", relationUser);
+            mv.setViewName("status");
+            return mv;
         } catch (Exception e) {
-            return new ModelAndView("error");
+            return new ModelAndView("status");
         }
     }
 
     @RequestMapping(value = "/deleteRelation/{uid}")
-    public ModelAndView deleteFriend(@ModelAttribute("user") User userTwo, @PathVariable("uid") Long uid, HttpSession session) {
-        try {
+    public ModelAndView deleteFriend(User userTwo, @PathVariable("uid") Long uid, HttpSession session) {
+    	ModelAndView mv = new ModelAndView();
+    	try {
             User userOne = (User) session.getAttribute("loguser");
             userTwo = userDAO.getUserById(uid);
             RelationUser relationUser = new RelationUser();
             relationUser.setUserOne(userOne);
             relationUser.setUserTwo(userTwo);
             relationUserDAO.deleteFriend(relationUser);
-            return new ModelAndView("redirect:/viewProfilesUsers");
+            relationUser = relationUserDAO.getRelationAmongUsers(userOne, userTwo);
+            mv.addObject("relationUser", relationUser);
+            mv.setViewName("status");
+            return mv;
         } catch (Exception e) {
-            return new ModelAndView("error");
+            return new ModelAndView("status");
         }
     }
 
@@ -192,16 +197,18 @@ public class RelationUserController {
         return new ModelAndView("redirect:/viewProfilesUsers");
     }
 
-    @RequestMapping(value = "/blockUser/{status}/{uid}")
-    public ModelAndView blockUnblock(@ModelAttribute("user") User userTwo, @PathVariable("uid") Long uid, @PathVariable("status") Long status, HttpSession session) throws Exception {
+    @RequestMapping(value = "/blockUser/{uid}")
+    public ModelAndView blockUnblock( User userTwo, @PathVariable("uid") Long uid, HttpSession session) throws Exception {
         try {
-            if (status == 2 || status == 3) {
-                RelationUser relationUser = new RelationUser();
-                User userOne = (User) session.getAttribute("loguser");
-                userTwo = userDAO.getUserById(uid);
+        	
+        	ModelAndView mv = new ModelAndView();
+        	User userOne = (User) session.getAttribute("loguser");
+        	userTwo = userDAO.getUserById(uid);
+        	RelationUser relationUser =  relationUserDAO.getRelationAmongUsers(userOne, userTwo);
+            if (relationUser.getStatus().getIdrel() == 2 || relationUser.getStatus().getIdrel() == 3) {                               
                 relationUser.setUserOne(userOne);
                 relationUser.setUserTwo(userTwo);
-                Relation relation = Relation.getRelationFor(status);
+                Relation relation = Relation.getRelationFor(relationUser.getStatus().getIdrel());
                 if (relation.getIdrel() == 2) {
                     relationUser.setStatus(Relation.BLOCKED);
                     checkBlocksDAO.createCheckBlock(userOne, userTwo);
@@ -209,7 +216,7 @@ public class RelationUserController {
                     User blocker = checkBlocksDAO.getBlocker(userOne, userTwo);
                     if (blocker.getUid() != null) {
                         relationUser.setStatus(Relation.ACCEPTED);
-                        checkBlocksDAO.deleteCheckBlock(userOne, userTwo);
+                        checkBlocksDAO.removeCheckBlock(userOne, userTwo);
                     }
                 }
                 try {
@@ -218,14 +225,20 @@ public class RelationUserController {
                     e.getMessage();
                 }
             }
-            return new ModelAndView("redirect:/viewProfilesUsers");
+            relationUser = relationUserDAO.getRelationAmongUsers(userOne, userTwo);
+            
+            mv.addObject("relationUser", relationUser);
+            
+            mv.setViewName("status");
+            
+            return mv;
         } catch (Exception e) {
-            return new ModelAndView("error");
+            return new ModelAndView("status");
         }
     }
 
-    @RequestMapping(value = "/blockUser//{uid}")
+    /*@RequestMapping(value = "/blockUser//{uid}")
     public ModelAndView bugBlockUnblock() {
-        return new ModelAndView("redirect:/viewProfilesUsers");
-    }
+        return new ModelAndView("status");
+    }*/
 }

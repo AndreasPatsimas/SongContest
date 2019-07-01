@@ -18,5 +18,5 @@ public interface CheckBlocksDAO {
     
     public void createCheckBlock(User userOne, User userTwo);
     
-    public void deleteCheckBlock(User userOne, User userTwo);
+    public void removeCheckBlock(User userOne, User userTwo);
 }

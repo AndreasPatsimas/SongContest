@@ -52,7 +52,7 @@ public class CheckBlocksDAOImpl implements CheckBlocksDAO {
     }
 
     @Override
-    public void deleteCheckBlock(User userOne, User userTwo) {
+    public void removeCheckBlock(User userOne, User userTwo) {
         try {
             String sql = "delete from checkblocks where blocker = "+userOne.getUid()+" and blocked = "+userTwo.getUid();
             jdbcTemplate.execute(sql);
