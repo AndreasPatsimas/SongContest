@@ -13,10 +13,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Users Page</title>
 <link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
 <script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link
@@ -139,7 +147,7 @@
 												</tr>
 												<tr>
 													<td>Status</td>
-													<td><div id = "getStatus">${relationUser.status.name}</div></td>
+													<td><div id="getStatus${relationUser.userTwo.uid}">${relationUser.status.name}</div></td>
 												</tr>
 											</tbody>
 										</table>
@@ -147,37 +155,118 @@
 								</div>
 							</div>
 							<div class="panel-footer">
-								<span class="pull-right">
-									<input type = "hidden" id = "helperfriendRequest" value = "${pageContext.request.contextPath}/friendRequest/${relationUser.userTwo.uid}">
-									<button class="btn btn-sm btn-primary" type="button" id = "friendRequest"
-										data-toggle="tooltip" title="Friend Request"
-										data-original-title="Send friend request to user"
-										>
+								<span class="pull-right"> <input type="hidden"
+									id="helperfriendRequest${relationUser.userTwo.uid}"
+									value="${pageContext.request.contextPath}/friendRequest/${relationUser.userTwo.uid}">
+									<button class="btn btn-sm btn-primary" type="button"
+										id="friendRequest${relationUser.userTwo.uid}" data-toggle="tooltip"
+										title="Friend Request"
+										data-original-title="Send friend request to user">
 										<i class="glyphicon glyphicon-send"></i>
-									</button>
-									<input type = "hidden" id = "helperacceptFriendRequest" value = "${pageContext.request.contextPath}/acceptFriendRequest/${relationUser.userTwo.uid}">
-									<button class="btn btn-sm btn-success" type="button" id = "acceptFriendRequest"
-										data-toggle="tooltip" title="Accept friend request"
-										data-original-title="Send message to user"
-										>
+									</button> <input type="hidden" id="helperacceptFriendRequest${relationUser.userTwo.uid}"
+									value="${pageContext.request.contextPath}/acceptFriendRequest/${relationUser.userTwo.uid}">
+									<button class="btn btn-sm btn-success" type="button"
+										id="acceptFriendRequest${relationUser.userTwo.uid}" data-toggle="tooltip"
+										title="Accept friend request"
+										data-original-title="Send message to user">
 										<i class="glyphicon glyphicon-ok"></i>
 									</button>
-								</span>
-								<input type = "hidden" id = "helperdeleteRelation" value = "${pageContext.request.contextPath}/deleteRelation/${relationUser.userTwo.uid}">
-								<button class="btn btn-sm btn-danger" type="button" id = "deleteRelation"
-									data-toggle="tooltip" title="Remove from friend"
-									data-original-title="Remove this user"
-									>
-									<i class="glyphicon glyphicon-remove"></i>
+								</span> <input type="hidden" id="helperdeleteRelation${relationUser.userTwo.uid}"
+									value="${pageContext.request.contextPath}/deleteRelation/${relationUser.userTwo.uid}">
+								<button class="btn btn-sm btn-danger" type="button"
+									id="deleteRelation${relationUser.userTwo.uid}" data-toggle="modal"
+									title="Remove from friend" data-target="#deleteMyRelation"
+									data-original-title="Remove this user">
+									<i class="fa fa-remove"></i>
 								</button>
-
-								<input type = "hidden" id = "helperBlock" value = "${pageContext.request.contextPath}/blockUser/${relationUser.userTwo.uid}">
-								<button class="btn btn-sm btn-warning" id = "block" type="button"
+								
+								<input type="hidden" id="helperBlock${relationUser.userTwo.uid}"
+									value="${pageContext.request.contextPath}/blockUser/${relationUser.userTwo.uid}">
+								<button class="btn btn-sm btn-warning" id="block${relationUser.userTwo.uid}" type="button"
 									data-toggle="tooltip" title="Block/Unblock your friend"
-									data-original-title="Block this user"
-									>
+									data-original-title="Block this user">
 									<i class="glyphicon glyphicon-ban-circle"></i>
 								</button>
+								
+								<script>
+								
+									$(document).ready(function() {
+										$('#block${relationUser.userTwo.uid}').click(function(event) {
+											var urlBlock = $('#helperBlock${relationUser.userTwo.uid}').val();
+											$.ajax({
+												url : urlBlock,
+												type : "GET",
+	
+												success : function(response) {
+													$("#getStatus${relationUser.userTwo.uid}").html(response);
+												},
+												error : function(xhr, status, error) {
+													console.log(xhr.responseText);
+												}
+											});
+											return false;
+										});
+									});
+									
+									$(document).ready(function() {
+										$('#friendRequest${relationUser.userTwo.uid}').click(function(event) {
+											var urlFriendRequest = $('#helperfriendRequest${relationUser.userTwo.uid}').val();
+											console.log(urlFriendRequest);
+											$.ajax({
+												url : urlFriendRequest,
+												type : "GET",
+
+												success : function(response) {
+													$("#getStatus${relationUser.userTwo.uid}").html(response);
+												},
+												error : function(xhr, status, error) {
+													console.log(xhr.responseText);
+												}
+											});
+											return false;
+										});
+									});
+
+									$(document).ready(function() {
+										$('#acceptFriendRequest${relationUser.userTwo.uid}').click(function(event) {
+											var urlFriendRequest = $('#helperacceptFriendRequest${relationUser.userTwo.uid}').val();
+											console.log(urlFriendRequest);
+											$.ajax({
+												url : urlFriendRequest,
+												type : "GET",
+
+												success : function(response) {
+													$("#getStatus${relationUser.userTwo.uid}").html(response);
+												},
+												error : function(xhr, status, error) {
+													console.log(xhr.responseText);
+												}
+											});
+											return false;
+										});
+									});
+
+									$(document).ready(function() {
+										$('#deleteRelation${relationUser.userTwo.uid}').click(function(event) {
+											var urlFriendRequest = $('#helperdeleteRelation${relationUser.userTwo.uid}').val();
+											console.log(urlFriendRequest);
+											$.ajax({
+												url : urlFriendRequest,
+												type : "GET",
+
+												success : function(response) {
+													$("#getStatus${relationUser.userTwo.uid}").html(response);
+												},
+												error : function(xhr, status, error) {
+													console.log(xhr.responseText);
+												}
+											});
+											return false;
+										});
+									});
+								
+								</script>
+								
 							</div>
 						</div>
 					</div>
@@ -185,86 +274,32 @@
 			</c:forEach>
 		</div>
 	</div>
+	
+	
+	
+	  <!--Modal1-->
+       <!--   <div class="container">
+            <div style="display: none;" class="modal fade" id="deleteMyRelation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Be Careful! Do you really want to remove your friend?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger"  onclick="window.location.href = 'deleteMyProfile'">Remove My Friend</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
 
 
 	<script>
-	
-	$(document).ready(function() {
-		$('#block').click(function(event) {
-			var urlBlock = $('#helperBlock').val();
-			console.log(urlBlock);
-			$.ajax({
-				url : urlBlock,
-				type : "GET",
 
-				success : function(response) {
-					$("#getStatus").html(response);
-				},
-				error : function(xhr, status, error) {
-					console.log(xhr.responseText);
-				}
-			});
-			return false;
-		});
-	});
-	
-	$(document).ready(function() {
-		$('#friendRequest').click(function(event) {
-			var urlFriendRequest = $('#helperfriendRequest').val();
-			console.log(urlFriendRequest);
-			$.ajax({
-				url : urlFriendRequest,
-				type : "GET",
-
-				success : function(response) {
-					$("#getStatus").html(response);
-				},
-				error : function(xhr, status, error) {
-					console.log(xhr.responseText);
-				}
-			});
-			return false;
-		});
-	});
-	
-	$(document).ready(function() {
-		$('#acceptFriendRequest').click(function(event) {
-			var urlFriendRequest = $('#helperacceptFriendRequest').val();
-			console.log(urlFriendRequest);
-			$.ajax({
-				url : urlFriendRequest,
-				type : "GET",
-
-				success : function(response) {
-					$("#getStatus").html(response);
-				},
-				error : function(xhr, status, error) {
-					console.log(xhr.responseText);
-				}
-			});
-			return false;
-		});
-	});
-	
-	$(document).ready(function() {
-		$('#deleteRelation').click(function(event) {
-			var urlFriendRequest = $('#helperdeleteRelation').val();
-			console.log(urlFriendRequest);
-			$.ajax({
-				url : urlFriendRequest,
-				type : "GET",
-
-				success : function(response) {
-					$("#getStatus").html(response);
-				},
-				error : function(xhr, status, error) {
-					console.log(xhr.responseText);
-				}
-			});
-			return false;
-		});
-	});
-	
 		$(document)
 				.ready(
 						function() {

@@ -9,6 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div id="getStatus">${relationUser.status.name}</div>
+	<div id="getStatus${relationUser.userTwo.uid}">${relationUser.status.name}</div>
 </body>
 </html>
