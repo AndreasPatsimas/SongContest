@@ -155,10 +155,11 @@
 										>
 										<i class="glyphicon glyphicon-send"></i>
 									</button>
-									<button class="btn btn-sm btn-success" type="button"
+									<input type = "hidden" id = "helperacceptFriendRequest" value = "${pageContext.request.contextPath}/acceptFriendRequest/${relationUser.userTwo.uid}">
+									<button class="btn btn-sm btn-success" type="button" id = "acceptFriendRequest"
 										data-toggle="tooltip" title="Accept friend request"
 										data-original-title="Send message to user"
-										onclick="window.location.href = '${pageContext.request.contextPath}/acceptFriendRequest/${relationUser.status.idrel}/${relationUser.userTwo.uid}'">
+										>
 										<i class="glyphicon glyphicon-ok"></i>
 									</button>
 								</span>
@@ -210,6 +211,25 @@
 	$(document).ready(function() {
 		$('#friendRequest').click(function(event) {
 			var urlFriendRequest = $('#helperfriendRequest').val();
+			console.log(urlFriendRequest);
+			$.ajax({
+				url : urlFriendRequest,
+				type : "GET",
+
+				success : function(response) {
+					$("#getStatus").html(response);
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr.responseText);
+				}
+			});
+			return false;
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#acceptFriendRequest').click(function(event) {
+			var urlFriendRequest = $('#helperacceptFriendRequest').val();
 			console.log(urlFriendRequest);
 			$.ajax({
 				url : urlFriendRequest,

@@ -176,26 +176,30 @@ public class RelationUserController {
         }
     }
 
-    @RequestMapping(value = "/acceptFriendRequest/{status}/{uid}")
-    public ModelAndView acceptFriendRequest(@ModelAttribute("user") User userTwo, @PathVariable("uid") Long uid, @PathVariable("status") Long status, HttpSession session) throws Exception {
-        try {
+    @RequestMapping(value = "/acceptFriendRequest/{uid}")
+    public ModelAndView acceptFriendRequest(User userTwo, @PathVariable("uid") Long uid, HttpSession session) throws Exception {
+    	ModelAndView mv = new ModelAndView();
+    	try {
             User userOne = (User) session.getAttribute("loguser");
             userTwo = userDAO.getUserById(uid);
-            RelationUser relationUser = new RelationUser();
-            relationUser.setUserOne(userOne);
+            RelationUser relationUser = relationUserDAO.getRelationAmongUsers(userOne, userTwo);
+            /*relationUser.setUserOne(userOne);
             relationUser.setUserTwo(userTwo);
-            relationUser.setStatus(Relation.getRelationFor(status));
+            relationUser.setStatus(Relation.getRelationFor(status));*/
             relationUserDAO.acceptFriendRequest(relationUser);
-            return new ModelAndView("redirect:/viewProfilesUsers");
+            relationUser = relationUserDAO.getRelationAmongUsers(userOne, userTwo);
+            mv.addObject("relationUser", relationUser);
+            mv.setViewName("status");
+            return mv;
         } catch (Exception e) {
-            return new ModelAndView("error");
+            return new ModelAndView("status");
         }
     }
 
-    @RequestMapping(value = "/acceptFriendRequest//{uid}")
+    /*@RequestMapping(value = "/acceptFriendRequest//{uid}")
     public ModelAndView bugAacceptFriendRequest() {
         return new ModelAndView("redirect:/viewProfilesUsers");
-    }
+    }*/
 
     @RequestMapping(value = "/blockUser/{uid}")
     public ModelAndView blockUnblock( User userTwo, @PathVariable("uid") Long uid, HttpSession session) throws Exception {
