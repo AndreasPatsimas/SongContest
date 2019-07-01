@@ -278,7 +278,7 @@ public class MessageController {
             }
             ModelAndView model = new ModelAndView();
             model.addObject("user", user);
-            model.setViewName("profileuser");
+            model.setViewName("redirect:/goToUserProfile");
             return model;
         } else {
             return new ModelAndView("error");
