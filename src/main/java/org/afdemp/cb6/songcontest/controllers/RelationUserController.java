@@ -86,9 +86,9 @@ public class RelationUserController {
         	for (User user : usersList) {
                 relationUserList.add(relationUserDAO.getRelationAmongUsers(logUser, user));
             }
-        	String x = "ap";
+        	
         	mv.addObject("relationUserList", relationUserList);
-        	mv.addObject("x", x);
+        	
         	mv.setViewName("search_users");
         	
             return mv;
