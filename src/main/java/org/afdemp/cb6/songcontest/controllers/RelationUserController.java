@@ -45,11 +45,46 @@ public class RelationUserController {
     public String viewProfilesOfUsers(HttpSession session, Model model) {
     	if(session.getAttribute("loguser") != null){
     		
+    		User user = (User) session.getAttribute("loguser");
+    		
+    		Long numberOfFriendRequests = relationUserDAO.getNumberOfMyFriendRequests(user);
+    		
+    		if(numberOfFriendRequests != 0l) {
+    			
+    			model.addAttribute("numberOfFriendRequests", numberOfFriendRequests);
+    		}
+    		
     		return "profiles";
 		}
     	else {
     		return "error";
     	}
+    }
+    
+    @RequestMapping(value = "/accOrRejFriendRequests")
+    public ModelAndView friendRequests(HttpSession session, ModelAndView mv)
+    {
+    	if(session.getAttribute("loguser") != null){
+    		
+    		User user = (User) session.getAttribute("loguser");
+    		
+    		List<User> usersMadeFriendRequests = relationUserDAO.getMyFriendRequests(user);
+    		
+    		if(usersMadeFriendRequests.isEmpty()) {
+    			mv.setViewName("profiles");
+    		}
+    		else {
+    			mv.addObject("usersMadeFriendRequests", usersMadeFriendRequests);
+        		
+        		mv.setViewName("friend_requests");
+    		}
+    		
+    		return mv;
+    	}
+    	else {
+    		return new ModelAndView("error");
+    	}
+    	
     }
     
     @RequestMapping(value = "/searchForUsers")
@@ -190,6 +225,42 @@ public class RelationUserController {
             return mv;
         } catch (Exception e) {
             return new ModelAndView("status");
+        }
+    }
+    
+    @RequestMapping(value = "/yes/{uid}")
+    public ModelAndView yesToFriendRequest(User userTwo, @PathVariable("uid") Long uid, HttpSession session) throws Exception {
+    	ModelAndView mv = new ModelAndView();
+    	try {
+            User userOne = (User) session.getAttribute("loguser");
+            userTwo = userDAO.getUserById(uid);
+            RelationUser relationUser = relationUserDAO.getRelationAmongUsers(userOne, userTwo);
+            relationUserDAO.acceptFriendRequest(relationUser);
+            relationUser = relationUserDAO.getRelationAmongUsers(userOne, userTwo);
+            mv.addObject("relationUser", relationUser);
+            mv.setViewName("redirect:/accOrRejFriendRequests");
+            return mv;
+        } catch (Exception e) {
+            return new ModelAndView("accOrRejFriendRequests");
+        }
+    }
+    
+    @RequestMapping(value = "/no/{uid}")
+    public ModelAndView noToFriendRequest(User userTwo, @PathVariable("uid") Long uid, HttpSession session) {
+    	ModelAndView mv = new ModelAndView();
+    	try {
+            User userOne = (User) session.getAttribute("loguser");
+            userTwo = userDAO.getUserById(uid);
+            RelationUser relationUser = new RelationUser();
+            relationUser.setUserOne(userOne);
+            relationUser.setUserTwo(userTwo);
+            relationUserDAO.deleteFriend(relationUser);
+            relationUser = relationUserDAO.getRelationAmongUsers(userOne, userTwo);
+            mv.addObject("relationUser", relationUser);
+            mv.setViewName("redirect:/accOrRejFriendRequests");
+            return mv;
+        } catch (Exception e) {
+            return new ModelAndView("accOrRejFriendRequests");
         }
     }
 

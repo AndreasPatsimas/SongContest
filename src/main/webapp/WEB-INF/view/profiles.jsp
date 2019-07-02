@@ -93,10 +93,12 @@
 			<!--spacer-->
 		</div>
 	</nav>
-	<h2 style="text-align: center; color: white">Make Friends ${aris}!</h2>
+	<h2 style="text-align: center; color: white">Make Friends !</h2>
 	<br>
 	<br>
 	<div class="container">
+	<button class="my-5 text-white btn btn-lg btn-outline-secondary" style="text-align: center;"  onclick="window.location.href = 'accOrRejFriendRequests'" id = "reqButton">You have ${numberOfFriendRequests} friend requests!</button>
+	<br>
 		<form id="sub" method="get">
 			<div class="col-xs-2">
 				<input class="form-control" placeholder="Search..." id="ex1"
@@ -133,6 +135,15 @@
 			return false;
 		});
 	});
+	
+	var friedrequests = "${numberOfFriendRequests}";
+	if(friedrequests == ""){
+		var reqButton = document.getElementById("reqButton");
+		reqButton.innerHTML = "No friend requests... ";
+		reqButton.disabled = true;
+	}
+	
+	
 </script>
 
 </body>

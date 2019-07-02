@@ -193,7 +193,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public List<User> getUsersBySearch(String firstname, String lastname, User user) {
 		String sql = "select * from user where (firstname like '"+firstname+"%' or lastname like '"+lastname+"%') "
-				+ "and username <> " + "'" + user.getUsername() + "'" ;
+				+ "and username <> " + "'" + user.getUsername() + "' limit 50" ;
 		
 		 return jdbcTemplate.query(sql, new RowMapper<User>() {
 	            public User mapRow(ResultSet rs, int rowNum) throws SQLException {

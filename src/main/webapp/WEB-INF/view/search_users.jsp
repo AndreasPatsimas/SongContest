@@ -121,7 +121,7 @@
 											<dt>Date of Birth</dt>
 											<dd>${relationUser.userTwo.dob}</dd>
 											<dt>Status</dt>
-											<dd>${relationUser.status.name}</dd>
+											<dd><div id="getStatuss${relationUser.userTwo.uid}">${relationUser.status.name}</div></dd>
 										</dl>
 									</div>
 									<div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
