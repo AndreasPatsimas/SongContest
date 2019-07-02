@@ -62,6 +62,9 @@ public class UserController {
     @Autowired
     private ResultsDAO resultsDAO;
     
+    @Autowired
+    private RelationUserDAO relationUserDAO;
+    
     private static final Logger LOGGER = Logger.getLogger(UserController.class.getName());
 
     @InitBinder
@@ -170,15 +173,21 @@ public class UserController {
     public ModelAndView goToUserProfile(HttpSession session, ModelAndView model) {
         if (session.getAttribute("loguser") != null) {
             User user = (User) session.getAttribute("loguser");
-            Long notifications = messageDAO.getMessagesNotifications(user);
-            if(notifications == 0l){
-                notifications = null;
+            Long messagesNotifications = messageDAO.getMessagesNotifications(user);
+            if(messagesNotifications == 0l){
+                messagesNotifications = null;
+            }
+            
+            Long numberOfFriendRequests = relationUserDAO.getNumberOfMyFriendRequests(user);
+            if(numberOfFriendRequests == 0l){
+            	numberOfFriendRequests = null;
             }
             
             Results results = (Results) resultsDAO.getUserResults(user);
             model.addObject("results", results);
             model.addObject("user", user);
-            model.addObject("notifications", notifications);
+            model.addObject("messagesNotifications", messagesNotifications);
+            model.addObject("numberOfFriendRequests", numberOfFriendRequests);
             model.setViewName("profileuser");
             return model;
         } else {

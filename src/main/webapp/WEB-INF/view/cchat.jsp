@@ -56,6 +56,9 @@
                         <a class="nav-link" style="font-size: 20px;" href="goToUserProfile">Profile</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" style="font-size: 20px;" href="viewProfilesUsers">Make Friends</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link active" style="font-size: 20px;" href="messages">Messages</a>
                     </li>
                     <li class="nav-item">
@@ -79,8 +82,8 @@
                         <div class="card-header msg_head">
                             <div class="d-flex bd-highlight">
                                 <div class="img_cont">
-                                    <img src="getUserPhoto/<c:out value='${receiver.uid}'/>" class="rounded-circle user_img">
-                                    <span class="online_icon"></span>
+                                    <img src="getUserPhoto/<c:out value='${receiver.uid}'/>" class="rounded-circle user_img" alt = " " >
+                                    <!-- <span class="online_icon"></span> -->
                                 </div>
                                 <div class="user_info">
                                     <span>Chat with  ${receiver.firstname} ${receiver.lastname}</span>
@@ -107,7 +110,7 @@
                                         <span class="msg_time">${entry.key.doc}</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="getUserPhoto/<c:out value='${entry.key.sender.uid}'/>" class="rounded-circle user_img_msg">
+                                        <img src="getUserPhoto/<c:out value='${entry.key.sender.uid}'/>" class="rounded-circle user_img_msg" >
                                     </div>
                                     
                                 </div>

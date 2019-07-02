@@ -27,4 +27,8 @@ public interface RelationUserDAO {
     public void deleteFriend(RelationUser relationUser);
     
     public List<User> getMyFriends(User user);
+    
+    public Long getNumberOfMyFriendRequests(User user);
+    
+    public List<User> getMyFriendRequests(User user);
 }

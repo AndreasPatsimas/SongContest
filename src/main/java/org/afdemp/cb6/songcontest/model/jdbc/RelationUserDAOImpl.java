@@ -144,4 +144,38 @@ public class RelationUserDAOImpl implements RelationUserDAO {
         return friendsList;
     }
 
+	@Override
+	public Long getNumberOfMyFriendRequests(User user) {
+		
+		String sql = "select count(*) from relationuser where user_two = "+user.getUid()+ " and status = 1 ";
+                
+        Long friendRequests = jdbcTemplate.queryForLong(sql);
+        
+        return friendRequests;
+	}
+
+	@Override
+	public List<User> getMyFriendRequests(User user) {
+		
+		String sql = "select user_one from relationuser where user_two = "+user.getUid()+ " and status = 1 ";
+		
+		List<User> list = jdbcTemplate.query(sql, new ResultSetExtractor<List<User>>() {
+	        @Override
+	        public List<User> extractData(ResultSet rs) throws SQLException, DataAccessException {
+	            List<User> list = new ArrayList<>();
+	            while(rs.next()){
+	               
+	            	User userOne = userDAO.getUserById(rs.getLong("user_one"));
+	                
+	            	list.add(userOne);
+	            }
+	           
+	            return list;
+	            
+	        	}
+	        });
+		
+		return list;
+	}
+
 }

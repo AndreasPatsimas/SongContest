@@ -77,7 +77,7 @@
 					<div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
 						<img class="img-circle"
 							src="./getUserPhoto/<c:out value='${relationUser.userTwo.uid}'/>"
-							width="60" alt="User Pic">
+							width="60" alt=" ">
 					</div>
 					<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
 						<strong>${relationUser.userTwo.firstname}
@@ -101,7 +101,7 @@
 									<div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
 										<img class="img-circle"
 											src="./getUserPhoto/<c:out value='${relationUser.userTwo.uid}'/>"
-											width="120" alt="User Pic">
+											width="120" alt=" ">
 									</div>
 									<div class="col-xs-8 col-sm-6 hidden-md hidden-lg">
 										<img class="img-circle"

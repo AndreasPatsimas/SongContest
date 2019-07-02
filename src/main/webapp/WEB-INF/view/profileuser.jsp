@@ -94,7 +94,7 @@
                                     <div class="col-xs-8 col-sm-6 col-md-3 col-lg-3">
                                         <img class="img-circle"
                                              src="getUserPhoto/<c:out value='${user.uid}'/>" width="120" 
-                                             alt="User Pic">
+                                             alt=" "> <!-- <img  src="<c:url value="/pic/vinyl-2241789__340.png"/>" width="70" height="70"> -->
                                     </div>
                                 </div>
                                 <div class="column col-lg-6">
@@ -143,11 +143,11 @@
                             <button class="btn btn-sm btn-success" type="button"
                                     data-toggle="tooltip"
                                     title="Search for your friends"
-                                    data-original-title="users" onclick="window.location.href = 'viewProfilesUsers'"><i class="fa fa-user"></i></button>
+                                    data-original-title="users" onclick="window.location.href = 'viewProfilesUsers'"><i class="fa fa-user"></i><span style="color: red"><b>${numberOfFriendRequests}</b></span></button>
                             <button class="btn btn-sm btn-primary" type="button"
                                     data-toggle="tooltip"
                                     title="Chat with your friends"
-                                    data-original-title="Inbox" onclick="window.location.href = 'messages'"><i class="fa fa-envelope"></i><span style="color: red"><b>${notifications}</b></span></button>
+                                    data-original-title="Inbox" onclick="window.location.href = 'messages'"><i class="fa fa-envelope"></i><span style="color: red"><b>${messagesNotifications}</b></span></button>
 
                             <span class="pull-right">
                                 <button class="btn btn-sm btn-warning" type="button"
