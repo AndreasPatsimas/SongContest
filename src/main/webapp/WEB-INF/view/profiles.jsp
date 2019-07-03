@@ -137,12 +137,17 @@
 	});
 	
 	var friedrequests = "${numberOfFriendRequests}";
+	
 	if(friedrequests == ""){
 		var reqButton = document.getElementById("reqButton");
 		reqButton.innerHTML = "No friend requests... ";
 		reqButton.disabled = true;
 	}
 	
+	
+	if(friedrequests == 1){
+		document.getElementById("reqButton").innerHTML = "You have 1 friend request!"
+	}
 	
 </script>
 
