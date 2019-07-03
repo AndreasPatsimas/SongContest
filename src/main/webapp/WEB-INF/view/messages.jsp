@@ -73,9 +73,15 @@
         <form:form action="chatForm" modelAttribute="user"><button class="btn btn-outline-secondary btn-lg btn-block my-5 text-white disabled">
                             My friends:</button><form:select class="form-control form-control-lg" path="uid">
                 <c:forEach items="${map}" var="entry">
-                    <form:option value="${entry.key.uid}" label="${entry.key.firstname} ${entry.key.lastname}  ${entry.value}"/>
+                    <form:option value="${entry.key.uid}" label="${entry.key.firstname} ${entry.key.lastname}  ${entry.value}" id = "opt${entry.key.uid}"/>
+                    <script>
+                    	var opt = document.getElementById("opt${entry.key.uid}");
+                    	var numberOfMessages = "${entry.value}";
+                    	if(numberOfMessages != 0){
+                    		opt.innerHTML = "${entry.key.firstname} ${entry.key.lastname} (${entry.value})";
+                    	}
+                    </script>
                 </c:forEach>
-
 
             </form:select>
             <br>
