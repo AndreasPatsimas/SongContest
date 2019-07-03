@@ -76,7 +76,7 @@
                                         <div class="tab-content">
                                             <div class="tab-pane" id="about">
                                                 <div class="row">
-                                                    <h4 class="info-text" style="margin-left: 125px;">Let's start with the basic information (with validation)</h4>
+                                                    <h4 class="info-text" style="margin-left: 125px;">Let's start with the basic information</h4>
                                                     <div class="col-sm-4 col-sm-offset-1">
                                                         <div class="picture-container">
                                                             <div class="picture">
