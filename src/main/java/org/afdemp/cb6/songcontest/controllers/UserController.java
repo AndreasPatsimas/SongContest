@@ -116,6 +116,7 @@ public class UserController {
                             date = new SimpleDateFormat("yyyy-MM-dd").parse(dob);
                             user.setDob(date);
                         }
+      
                         userDAO.saveUser(user, photo);
                         RoleUser roleuser = new RoleUser();
                         roleuser.setUser(userDAO.getUserById(userDAO.getMaxUserId()));
@@ -310,6 +311,14 @@ public class UserController {
     	}
     	catch(Exception e) {
     		LOGGER.info("No photo for some users ");
+    		
+    		Blob ph = userDAO.getPictureByUserId(51l);
+
+            byte[] bytes = ph.getBytes(1, (int) ph.length());
+            
+            InputStream inputStream = new ByteArrayInputStream(bytes);
+            
+            IOUtils.copy(inputStream, response.getOutputStream());
     	}
 	}
         

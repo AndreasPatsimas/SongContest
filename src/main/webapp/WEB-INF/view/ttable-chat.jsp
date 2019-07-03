@@ -46,9 +46,9 @@
                                                 <span class="msg_time">${entry.key.doc}</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="getUserPhoto/<c:out value='${entry.key.sender.uid}'/>" class="rounded-circle user_img_msg">
+                                        <img src="getUserPhoto/<c:out value='${entry.key.sender.uid}'/>" class="rounded-circle user_img_msg" id = "img">
                                     </div>
-                                    
+                        
                                 </div>
                             </c:forEach>
 
@@ -62,6 +62,7 @@
                 }
                 //console.log(document.getElementsByClassName("d-flex justify-content-start mb-4")[i].id);
             }*/
+            
         </script>
     </body>
 </html>

@@ -110,7 +110,7 @@
                                         <span class="msg_time">${entry.key.doc}</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="getUserPhoto/<c:out value='${entry.key.sender.uid}'/>" class="rounded-circle user_img_msg" >
+                                        <img src="getUserPhoto/<c:out value='${entry.key.sender.uid}'/>" class="rounded-circle user_img_msg" alt = " " id = "img" >
                                     </div>
                                     
                                 </div>
@@ -151,6 +151,9 @@
             
                 
             //});
+            
+            var img = document.getElementById("img").alt;
+            console.log(img);
 
              window.setInterval('wand()', 1000);
              function wand() {
