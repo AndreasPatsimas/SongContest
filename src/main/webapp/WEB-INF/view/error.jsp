@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,7 @@
             </div>
             <div class="col text-center">
             <h1>Gia na doume.. Paizei????? Giati den paizei??????!</h1>
-            <img src="/SongContests/pic/Error.jpg" alt="Error"/>
+            <img src="<c:url value="/pic/Error.jpg"/>" alt="Error"/>
             <br>
             <button class="btn btn-outline-secondary col-lg-6 col-lg-offset-3" onclick="window.location.href = './'">Home</button>
             </div>

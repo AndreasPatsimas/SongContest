@@ -70,7 +70,7 @@
                 <div class="col">
                 </div>
                 <div class="col text-center text-white">
-                    <img src="/SongContests/pic/battle.webp"/>
+                    <img src="<c:url value="/pic/battle.webp"/>"/>
                     <form:form action="songcontest"><button class="btn btn-outline-secondary btn-lg btn-block my-5 text-white disabled">
                             My friends:</button><select class="form-control form-control-lg" name="opponentId">
                             <c:forEach items="${map}" var="entry">

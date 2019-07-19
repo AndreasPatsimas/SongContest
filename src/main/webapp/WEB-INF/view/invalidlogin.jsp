@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,8 +23,8 @@
             <div class="col">
             </div>
             <div class="col">
-                <div class="card" style="">
-                    <img src="/SongContests/pic/Unauthorised.jpg" class="card-img-top img-fluid">
+                <div class="card" style="">                
+                    <img src="<c:url value="/pic/Unauthorised.jpg"/>" class="card-img-top img-fluid">
                     <div class="card-body text-warning">
                         <h5 class="card-title">You failed to login</h5>
                         <p class="card-text">Wrong username and password combination. Please try again.</p>

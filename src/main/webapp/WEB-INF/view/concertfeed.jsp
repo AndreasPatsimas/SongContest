@@ -285,8 +285,7 @@ to {
 		<div class="row">
 			<div class="col"></div>
 			<div class="col text-center">
-
-				<img id="myImg" src="/SongContests/pic/musician-664432__340.jpg"
+				<img id="myImg" src="<c:url value="/pic/musician-664432__340.jpg"/>"
 					alt="Concerts" class="center">
 
 

@@ -67,7 +67,7 @@
         </nav>
         <div class="container">
             <h1 class="text-center text-white">Prepare for messaging ${user.firstname}!</h1>
-            <img src="/SongContests/pic/mail-envelope.jpg" class="col-lg-4 col-lg-offset-2" style="margin-left: 350px; margin-top: 10px;">
+            <img src="<c:url value="/pic/mail-envelope.jpg"/>" class="col-lg-4 col-lg-offset-2" style="margin-left: 350px; margin-top: 10px;">
         </div>
         <div class="container col-lg-4">
         <form:form action="chatForm" modelAttribute="user"><button class="btn btn-outline-secondary btn-lg btn-block my-5 text-white disabled">
