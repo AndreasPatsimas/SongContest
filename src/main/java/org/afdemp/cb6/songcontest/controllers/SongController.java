@@ -95,36 +95,41 @@ public class SongController {
     public ModelAndView playSong(HttpSession session, @RequestParam("opponentId") Long opponentId)
     {
         if(session.getAttribute("loguser") != null){
-            User user = (User) session.getAttribute("loguser");
-            User opponent = userDAO.getUserById(opponentId);
-            session.setAttribute("opponent", opponent);
-            ModelAndView model = new ModelAndView();
-            model.addObject("user", user);
-            model.addObject("opponent", opponent);
-            List<Song> songList = songDAO.getAllSongQuestions();
-            Song song=songDAO.getSongRand(songList);
-            //model.addObject("songList", songList);
-            model.addObject("song", song);
-            if(scoresDAO.getScoresNotificationsFromSpecificUser(user, opponent) == 0l){
-                model.setViewName("player");
-            }
-            else{
-                Scores score = new Scores();
-                score.setUserOne(user);
-                score.setUserTwo(opponent);
-                score.setNotification(1l);
-                score = scoresDAO.checkScore(score);
-                if(score.getUserOne().getUsername().equals(user.getUsername())){
-                   //waiting for playing player you challenge
-                   model.setViewName("redirect:/chooseYourOpponent");
-                }
-                else{
-                    model.setViewName("player");
-                }
-            }
-
-            return model;
-        }
+        	try {
+	            User user = (User) session.getAttribute("loguser");
+	            User opponent = userDAO.getUserById(opponentId);
+	            session.setAttribute("opponent", opponent);
+	            ModelAndView model = new ModelAndView();
+	            model.addObject("user", user);
+	            model.addObject("opponent", opponent);
+	            List<Song> songList = songDAO.getAllSongQuestions();
+	            Song song=songDAO.getSongRand(songList);
+	            //model.addObject("songList", songList);
+	            model.addObject("song", song);
+	            if(scoresDAO.getScoresNotificationsFromSpecificUser(user, opponent) == 0l){
+	                model.setViewName("player");
+	            }
+	            else{
+	                Scores score = new Scores();
+	                score.setUserOne(user);
+	                score.setUserTwo(opponent);
+	                score.setNotification(1l);
+	                score = scoresDAO.checkScore(score);
+	                if(score.getUserOne().getUsername().equals(user.getUsername())){
+	                   //waiting for playing player you challenge
+	                   model.setViewName("redirect:/chooseYourOpponent");
+	                }
+	                else{
+	                    model.setViewName("player");
+	                }
+	            }
+	
+	            return model;
+	        }
+        	catch(Exception e) {
+        		return new ModelAndView("redirect:/chooseYourOpponent");
+        	}
+    	}
         else{
             return new ModelAndView("error");
         }
