@@ -301,7 +301,7 @@ public class UserController {
             response.setContentType("image/jpeg");
 
             Blob ph = userDAO.getPictureByUserId(uid);
-
+            
             byte[] bytes = ph.getBytes(1, (int) ph.length());
             
             InputStream inputStream = new ByteArrayInputStream(bytes);
