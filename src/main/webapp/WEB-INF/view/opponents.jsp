@@ -97,6 +97,7 @@
 					<button type="submit"
 						class="btn btn-outline-secondary btn-lg btn-block my-5 text-white">Choose
 						your opponent</button>
+						<p style = "color:yellow" id = "inform"></p>
 				</form:form>
 			</div>
 			<div class="col"></div>
@@ -112,6 +113,8 @@
 			option.setAttribute("value", "0");
 
 			select.appendChild(option);
+			
+			document.getElementById("inform").innerHTML = "<h2>Make friends so you can play the game!</h2"
 
 		}
 	</script>
